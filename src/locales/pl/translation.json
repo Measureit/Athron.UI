@@ -1,0 +1,15 @@
+{
+  "welcome_message": "Witamy!",
+  "login": "Zaloguj się",
+  "email": "Email",
+  "password": "Hasło",
+  "dashboard": "Panel główny",
+  "athlete": "Postępy zawodnika",
+  "group": "Sesje grupowe",
+  "simulation": "Symulacja ścieżki",
+  "analytics": "Analityka",
+  "settings": "Ustawienia",
+  "language": "Język",
+  "profile": "Profil",
+  "logout": "Wyloguj się"
+}

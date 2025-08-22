@@ -1,21 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Navbar: React.FC = () => {
+    const { t } = useTranslation();
     return (
         <nav>
             <ul>
                 <li>
-                    <Link to="/">Home</Link>
+                    <Link to="/">{t('dashboard')}</Link>
                 </li>
                 <li>
-                    <Link to="/athlete">Athlete Progress</Link>
+                    <Link to="/athlete">{t('athlete')}</Link>
                 </li>
                 <li>
-                    <Link to="/group">Group Sessions</Link>
+                    <Link to="/group">{t('group')}</Link>
                 </li>
                 <li>
-                    <Link to="/simulation">Path Simulation</Link>
+                    <Link to="/simulation">{t('simulation')}</Link>
+                </li>
+                <li>
+                    <Link to="/analytics">{t('analytics')}</Link>
+                </li>
+                <li>
+                    <Link to="/settings">{t('settings')}</Link>
                 </li>
             </ul>
         </nav>

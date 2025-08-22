@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Settings: React.FC = () => {
+  const { t, i18n } = useTranslation();
+
   return (
     <div className="container-fluid p-4">
       <div className="row mb-4">
@@ -23,11 +26,13 @@ const Settings: React.FC = () => {
               <div className="row mb-3">
                 <label className="col-sm-3 col-form-label">App Language</label>
                 <div className="col-sm-9">
-                  <select className="form-select">
-                    <option selected>English</option>
-                    <option>Spanish</option>
-                    <option>French</option>
-                    <option>German</option>
+                  <select
+                    className="form-select"
+                    value={i18n.language}
+                    onChange={e => i18n.changeLanguage(e.target.value)}
+                  >
+                    <option value="en">English</option>
+                    <option value="pl">Polski</option>
                   </select>
                 </div>
               </div>

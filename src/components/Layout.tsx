@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useDemoAuth } from '../contexts/DemoAuthContext';
 import { DEMO_MODE } from '../firebase/config';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useTranslation } from 'react-i18next';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -13,6 +14,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const location = useLocation();
+  const { i18n } = useTranslation();
   
   // Use appropriate auth hook based on demo mode
   const authHook = DEMO_MODE ? useDemoAuth() : useAuth();
@@ -28,17 +30,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     }
   };
 
+  const { t } = useTranslation();
   const navItems = [
-    { path: '/', label: 'Dashboard', icon: 'bi-house-door' },
-    { path: '/athlete', label: 'Athlete Progress', icon: 'bi-person-circle' },
-    { path: '/group', label: 'Group Sessions', icon: 'bi-people' },
-    { path: '/simulation', label: 'Path Simulation', icon: 'bi-graph-up-arrow' },
-    { path: '/analytics', label: 'Analytics', icon: 'bi-bar-chart' },
-    { path: '/settings', label: 'Settings', icon: 'bi-gear' },
+    { path: '/', label: t('dashboard'), icon: 'bi-house-door' },
+    { path: '/athlete', label: t('athlete'), icon: 'bi-person-circle' },
+    { path: '/group', label: t('group'), icon: 'bi-people' },
+    { path: '/simulation', label: t('simulation'), icon: 'bi-graph-up-arrow' },
+    { path: '/analytics', label: t('analytics'), icon: 'bi-bar-chart' },
+    { path: '/settings', label: t('settings'), icon: 'bi-gear' },
   ];
 
   return (
-    <div className="d-flex">
+  <div className="d-flex">
       {/* Sidebar */}
       <div 
         className={`bg-dark text-white d-flex flex-column transition-all ${
@@ -130,13 +133,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Container fluid>
             <Navbar.Brand className="fw-bold">
               <i className="bi bi-activity me-2"></i>
-              D3 Training App
+              {t('app_name', 'D3 Training App')}
             </Navbar.Brand>
             <Nav className="ms-auto d-flex align-items-center">
               <Nav.Link href="#notifications" className="text-light me-2">
                 <i className="bi bi-bell"></i>
               </Nav.Link>
-              
               {user && (
                 <Dropdown align="end">
                   <Dropdown.Toggle 
@@ -156,24 +158,44 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     )}
                     <span className="d-none d-md-inline">{user.displayName || 'User'}</span>
                   </Dropdown.Toggle>
-
                   <Dropdown.Menu>
                     <Dropdown.Header>
                       <small className="text-muted">{user.email}</small>
                     </Dropdown.Header>
                     <Dropdown.Divider />
+                    <div className="px-3 py-2">
+                      <div className="input-group input-group-sm">
+                        <span className="input-group-text" style={{ padding: '0 0.5rem', background: 'none', border: 'none' }}>
+                          {i18n.language === 'pl' ? (
+                            <span role="img" aria-label="Poland" style={{ fontSize: '1.2em' }}>🇵🇱</span>
+                          ) : (
+                            <span role="img" aria-label="UK" style={{ fontSize: '1.2em' }}>🇬🇧</span>
+                          )}
+                        </span>
+                        <select
+                          id="user-language-select"
+                          className="form-select form-select-sm"
+                          value={i18n.language}
+                          onChange={e => i18n.changeLanguage(e.target.value)}
+                        >
+                          <option value="en">🇬🇧 EN</option>
+                          <option value="pl">🇵🇱 PL</option>
+                        </select>
+                      </div>
+                    </div>
+                    <Dropdown.Divider />
                     <Dropdown.Item href="#profile">
                       <i className="bi bi-person me-2"></i>
-                      Profile
+                      {t('profile')}
                     </Dropdown.Item>
                     <Dropdown.Item href="#settings">
                       <i className="bi bi-gear me-2"></i>
-                      Settings
+                      {t('settings')}
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={handleLogout} className="text-danger">
                       <i className="bi bi-box-arrow-right me-2"></i>
-                      Sign Out
+                      {t('logout', 'Sign Out')}
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -181,13 +203,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </Nav>
           </Container>
         </Navbar>
-
         {/* Page Content */}
         <div className="flex-grow-1 p-4" style={{ backgroundColor: '#f8f9fa' }}>
           {children}
         </div>
       </div>
-    </div>
+</div>
   );
 };
 
