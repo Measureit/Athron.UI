@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Athron.UI/static/css/main.1081b4a9.css",
-    "main.js": "/Athron.UI/static/js/main.c0957d66.js",
+    "main.js": "/Athron.UI/static/js/main.e041cf28.js",
     "index.html": "/Athron.UI/index.html",
     "main.1081b4a9.css.map": "/Athron.UI/static/css/main.1081b4a9.css.map",
-    "main.c0957d66.js.map": "/Athron.UI/static/js/main.c0957d66.js.map"
+    "main.e041cf28.js.map": "/Athron.UI/static/js/main.e041cf28.js.map"
   },
   "entrypoints": [
     "static/css/main.1081b4a9.css",
-    "static/js/main.c0957d66.js"
+    "static/js/main.e041cf28.js"
   ]
 }
