@@ -12,4 +12,5 @@
   "language": "Language",
   "profile": "Profile",
   "logout": "Logout"
+  , "login_google": "Sign in with Google"
 }

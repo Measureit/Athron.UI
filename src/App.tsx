@@ -24,7 +24,7 @@ const AppContent: React.FC = () => {
                 <div className="text-center">
                     <Spinner animation="border" variant="primary" style={{ width: '3rem', height: '3rem' }} />
                     <div className="mt-3">
-                        <h5>Loading D3 Training App...</h5>
+                        <h5>Loading Athron App...</h5>
                         <small className="text-muted">Please wait while we set up your session</small>
                     </div>
                 </div>
