@@ -26,14 +26,23 @@ const Settings: React.FC = () => {
               <div className="row mb-3">
                 <label className="col-sm-3 col-form-label">App Language</label>
                 <div className="col-sm-9">
-                  <select
-                    className="form-select"
-                    value={i18n.language}
-                    onChange={e => i18n.changeLanguage(e.target.value)}
-                  >
-                    <option value="en">English</option>
-                    <option value="pl">Polski</option>
-                  </select>
+                  <div className="input-group">
+                    <span className="input-group-text" style={{ padding: '0 0.5rem', background: 'none', border: 'none' }}>
+                      {i18n.language === 'pl' ? (
+                        <span role="img" aria-label="Poland" style={{ fontSize: '1.2em' }}>🇵🇱</span>
+                      ) : (
+                        <span role="img" aria-label="UK" style={{ fontSize: '1.2em' }}>🇬🇧</span>
+                      )}
+                    </span>
+                    <select
+                      className="form-select"
+                      value={i18n.language}
+                      onChange={e => i18n.changeLanguage(e.target.value)}
+                    >
+                      <option value="en">🇬🇧 EN</option>
+                      <option value="pl">🇵🇱 PL</option>
+                    </select>
+                  </div>
                 </div>
               </div>
               <div className="row mb-3">

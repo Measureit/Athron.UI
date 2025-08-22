@@ -1,8 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
-
-// Demo mode flag - set to true to use demo authentication (no Firebase required)
-export const DEMO_MODE = true;
+export const DEMO_MODE = process.env.NODE_ENV === 'development';
 
 // Firebase configuration
 // Replace these with your actual Firebase config values when DEMO_MODE is false

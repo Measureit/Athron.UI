@@ -60,7 +60,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             {!sidebarCollapsed && (
               <div className="d-flex align-items-center">
                 <i className="bi bi-activity me-2 fs-4"></i>
-                <span className="fw-bold">Athron</span>
+                <span className="fw-bold"></span>
               </div>
             )}
             <Button
@@ -133,7 +133,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Container fluid>
             <Navbar.Brand className="fw-bold">
               <i className="bi bi-activity me-2"></i>
-              {t('app_name', 'D3 Training App')}
+              {t('app_name', 'Athron')}
             </Navbar.Brand>
             <Nav className="ms-auto d-flex align-items-center">
               <Nav.Link href="#notifications" className="text-light me-2">
@@ -162,28 +162,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     <Dropdown.Header>
                       <small className="text-muted">{user.email}</small>
                     </Dropdown.Header>
-                    <Dropdown.Divider />
-                    <div className="px-3 py-2">
-                      <div className="input-group input-group-sm">
-                        <span className="input-group-text" style={{ padding: '0 0.5rem', background: 'none', border: 'none' }}>
-                          {i18n.language === 'pl' ? (
-                            <span role="img" aria-label="Poland" style={{ fontSize: '1.2em' }}>🇵🇱</span>
-                          ) : (
-                            <span role="img" aria-label="UK" style={{ fontSize: '1.2em' }}>🇬🇧</span>
-                          )}
-                        </span>
-                        <select
-                          id="user-language-select"
-                          className="form-select form-select-sm"
-                          value={i18n.language}
-                          onChange={e => i18n.changeLanguage(e.target.value)}
-                        >
-                          <option value="en">🇬🇧 EN</option>
-                          <option value="pl">🇵🇱 PL</option>
-                        </select>
-                      </div>
+                    <div className="d-flex align-items-center px-3 py-2">
+                      <i className="bi bi-translate me-2"></i>
+                      <select
+                        id="user-language-select"
+                        className="form-select form-select-sm ms-2"
+                        style={{ width: 'auto', minWidth: 90 }}
+                        value={i18n.language}
+                        onChange={e => i18n.changeLanguage(e.target.value)}
+                      >
+                        <option value="en">🇬🇧</option>
+                        <option value="pl">🇵🇱</option>
+                      </select>
                     </div>
-                    <Dropdown.Divider />
                     <Dropdown.Item href="#profile">
                       <i className="bi bi-person me-2"></i>
                       {t('profile')}
