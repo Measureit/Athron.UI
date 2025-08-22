@@ -92,7 +92,7 @@ const Login: React.FC = () => {
                     Continue with Google
                   </Button>
 
-                  <Button
+                  {/* <Button
                     variant="outline-dark"
                     size="lg"
                     onClick={handleFacebookSignIn}
@@ -118,7 +118,7 @@ const Login: React.FC = () => {
                       <i className="bi bi-facebook me-2" style={{ fontSize: '1.2rem' }}></i>
                     )}
                     Continue with Facebook
-                  </Button>
+                  </Button> */}
                 </div>
 
                 <div className="text-center mt-4">
