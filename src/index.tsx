@@ -7,7 +7,7 @@ import App from './App';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <Router basename="/Athron.UI">
       <App />
     </Router>
   </Provider>,
