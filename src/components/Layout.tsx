@@ -57,7 +57,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             {!sidebarCollapsed && (
               <div className="d-flex align-items-center">
                 <i className="bi bi-activity me-2 fs-4"></i>
-                <span className="fw-bold">D3 Training</span>
+                <span className="fw-bold">Athron</span>
               </div>
             )}
             <Button
