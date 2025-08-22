@@ -2,7 +2,7 @@
   "name": "athron",
   "version": "1.0.0",
   "description": "A React application for tracking athlete training sessions and simulating paths using D3.",
-  "homepage": "https://yourusername.github.io/athron",
+  "homepage": "https://measureit.github.io/athron.ui",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
