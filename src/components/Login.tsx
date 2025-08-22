@@ -3,8 +3,11 @@ import { Container, Card, Button, Alert, Spinner } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { useDemoAuth } from '../contexts/DemoAuthContext';
 import { DEMO_MODE } from '../firebase/config';
+import { useTranslation } from 'react-i18next';
 
 const Login: React.FC = () => {
+  const { t } = useTranslation();
+
   // Use appropriate auth hook based on demo mode
   const authHook = DEMO_MODE ? useDemoAuth() : useAuth();
   const { signInWithGoogle, signInWithFacebook } = authHook;
@@ -47,8 +50,8 @@ const Login: React.FC = () => {
                   <div className="mb-3">
                     <i className="bi bi-activity text-primary" style={{ fontSize: '3rem' }}></i>
                   </div>
-                  <h2 className="fw-bold text-dark mb-2">Welcome Back!</h2>
-                  <p className="text-muted">Sign in to access your D3 Training Dashboard</p>
+                  <h2 className="fw-bold text-dark mb-2">{t('welcome_message')}</h2>
+                  <p className="text-muted">{t('login')}</p>
                 </div>
 
                 {error && (
@@ -89,10 +92,9 @@ const Login: React.FC = () => {
                         <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                       </svg>
                     )}
-                    Continue with Google
+                    {t('continue_with_google')}
                   </Button>
-
-                  {/* <Button
+                  <Button
                     variant="outline-dark"
                     size="lg"
                     onClick={handleFacebookSignIn}
@@ -117,13 +119,13 @@ const Login: React.FC = () => {
                     ) : (
                       <i className="bi bi-facebook me-2" style={{ fontSize: '1.2rem' }}></i>
                     )}
-                    Continue with Facebook
-                  </Button> */}
+                    {t('continue_with_facebook')}
+                  </Button>
                 </div>
 
                 <div className="text-center mt-4">
                   <small className="text-muted">
-                    By signing in, you agree to our Terms of Service and Privacy Policy
+                    {t('terms_and_conditions')}
                   </small>
                 </div>
               </Card.Body>
@@ -133,15 +135,15 @@ const Login: React.FC = () => {
               <div className="row text-muted">
                 <div className="col-4">
                   <i className="bi bi-shield-check me-1"></i>
-                  <small>Secure</small>
+                  <small>{t('secure')}</small>
                 </div>
                 <div className="col-4">
                   <i className="bi bi-lightning me-1"></i>
-                  <small>Fast</small>
+                  <small>{t('fast')}</small>
                 </div>
                 <div className="col-4">
                   <i className="bi bi-graph-up me-1"></i>
-                  <small>Analytics</small>
+                  <small>{t('analytics')}</small>
                 </div>
               </div>
             </div>
