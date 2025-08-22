@@ -80,7 +80,6 @@ A modern, professional React application for tracking athlete training sessions 
 See [GITHUB_PAGES_DEPLOYMENT.md](GITHUB_PAGES_DEPLOYMENT.md) for complete step-by-step guide.
 
 ## 🔧 Configuration Modes
-
 ### Demo Mode (Default)
 - ✅ **No setup required** - works immediately
 - ✅ **Fake authentication** for testing
