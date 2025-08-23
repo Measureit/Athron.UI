@@ -11,13 +11,10 @@ const Navbar: React.FC = () => {
                     <Link to="/">{t('dashboard')}</Link>
                 </li>
                 <li>
-                    <Link to="/athlete">{t('athlete')}</Link>
+                    <Link to="/blog">{t('blog')}</Link>
                 </li>
                 <li>
-                    <Link to="/group">{t('group')}</Link>
-                </li>
-                <li>
-                    <Link to="/simulation">{t('simulation')}</Link>
+                    <Link to="/simulator">{t('simulator')}</Link>
                 </li>
                 <li>
                     <Link to="/analytics">{t('analytics')}</Link>

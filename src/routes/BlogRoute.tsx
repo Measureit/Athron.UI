@@ -2,16 +2,16 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import AthleteProgress from '../components/AthleteProgress';
+import Blog from '../components/Blog';
 
-const AthleteRoute: React.FC<{ path: string }> = ({ path }) => {
+const BlogRoute: React.FC<{ path: string }> = ({ path }) => {
     const athlete = useSelector((state: RootState) => state.athlete.currentAthlete);
 
     return (
         <Route path={path}>
-            {athlete ? <AthleteProgress athleteId={athlete.id} /> : <Redirect to="/" />}
+            <Blog />
         </Route>
     );
 };
 
-export default AthleteRoute;
+export default BlogRoute;

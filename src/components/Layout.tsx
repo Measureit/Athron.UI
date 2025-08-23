@@ -12,6 +12,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  // ...existing code...
   const [sidebarCollapsed, setSidebarCollapsed] = useState(window.innerWidth < 768);
   const location = useLocation();
   const { i18n } = useTranslation();
@@ -41,11 +42,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   const { t } = useTranslation();
+  // navItems must be inside the component to update on language change
   const navItems = [
     { path: '/', label: t('dashboard'), icon: 'bi-house-door' },
-    { path: '/athlete', label: t('athlete'), icon: 'bi-person-circle' },
-    { path: '/group', label: t('group'), icon: 'bi-people' },
-    { path: '/simulation', label: t('simulation'), icon: 'bi-graph-up-arrow' },
+    { path: '/blog', label: t('blog'), icon: 'bi-journal-text' },
+    { path: '/simulator', label: t('simulator'), icon: 'bi-cpu' },
     { path: '/analytics', label: t('analytics'), icon: 'bi-bar-chart' },
     { path: '/settings', label: t('settings'), icon: 'bi-gear' },
   ];
@@ -53,22 +54,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const sidebarWidth =  sidebarCollapsed ? 52 : 280;
 
   return (
-  <div className="d-flex">
-      {/* Sidebar */}
-      <div 
-        className={`bg-dark text-white d-flex flex-column transition-all ${
-          sidebarCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded'
-        }`}
-        style={{
-          width: sidebarWidth,
-          minHeight: '100vh',
-          transition: 'width 0.3s ease',
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          zIndex: 1020
-        }}
-      >
+  <div style={{ minHeight: '100vh', display: 'flex' }}>
+    {/* Sidebar */}
+    <div 
+      className={`bg-dark text-white d-flex flex-column transition-all ${sidebarCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded'}`}
+      style={{
+        width: sidebarWidth,
+        minHeight: '100vh',
+        transition: 'width 0.3s ease',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        zIndex: 1020
+      }}
+    >
         {/* Sidebar Header */}
         <div className="p-3 border-bottom border-secondary">
           <div className="d-flex align-items-center justify-content-between">
@@ -143,7 +142,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
 
     {/* Main Content Area */}
-    <div style={{ marginLeft: sidebarWidth, minHeight: '100vh' }}>
+    <div style={{ marginLeft: sidebarWidth, width: `calc(100vw - ${sidebarWidth}px)`, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Top Navigation Bar */}
       <Navbar
         bg="primary"
@@ -158,84 +157,82 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           height: 56
         }}
       >
-          <Container fluid>
-            <Navbar.Brand className="fw-bold">
-              <i className="bi bi-activity me-2"></i>
-              {t('app_name', 'Athron')}
-            </Navbar.Brand>
-            <Nav className="ms-auto d-flex align-items-center">
-              <Nav.Link href="#notifications" className="text-light me-2">
-                <i className="bi bi-bell"></i>
-              </Nav.Link>
-              {user && (
-                <Dropdown align="end">
-                  <Dropdown.Toggle 
-                    variant="link" 
-                    className="text-light text-decoration-none p-0 border-0 d-flex align-items-center"
-                    id="user-dropdown"
-                  >
-                    {user.photoURL ? (
-                      <img
-                        src={user.photoURL}
-                        alt="Profile"
-                        className="rounded-circle me-2"
-                        style={{ width: '32px', height: '32px' }}
-                      />
-                    ) : (
-                      <i className="bi bi-person-circle me-2" style={{ fontSize: '1.5rem' }}></i>
-                    )}
-                    <span className="d-none d-md-inline">{user.displayName || 'User'}</span>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Header>
-                      <small className="text-muted">{user.email}</small>
-                    </Dropdown.Header>
-                    <div className="d-flex align-items-center px-3 py-2">
-                      <i className="bi bi-translate me-2"></i>
-                      <select
-                        id="user-language-select"
-                        className="form-select form-select-sm ms-2"
-                        style={{ width: 'auto', minWidth: 90 }}
-                        value={i18n.language}
-                        onChange={e => i18n.changeLanguage(e.target.value)}
-                      >
-                        <option value="en">🇬🇧</option>
-                        <option value="pl">🇵🇱</option>
-                      </select>
-                    </div>
-                    <Dropdown.Item href="#profile">
-                      <i className="bi bi-person me-2"></i>
-                      {t('profile')}
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#settings">
-                      <i className="bi bi-gear me-2"></i>
-                      {t('settings')}
-                    </Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item onClick={handleLogout} className="text-danger">
-                      <i className="bi bi-box-arrow-right me-2"></i>
-                      {t('logout', 'Sign Out')}
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              )}
-            </Nav>
-          </Container>
-        </Navbar>
+        <Container fluid>
+          <Navbar.Brand className="fw-bold">
+            <i className="bi bi-activity me-2"></i>
+            {t('app_name', 'Athron')}
+          </Navbar.Brand>
+          <Nav className="ms-auto d-flex align-items-center">
+            <Nav.Link href="#notifications" className="text-light me-2">
+              <i className="bi bi-bell"></i>
+            </Nav.Link>
+            {user && (
+              <Dropdown align="end">
+                <Dropdown.Toggle 
+                  variant="link" 
+                  className="text-light text-decoration-none p-0 border-0 d-flex align-items-center"
+                  id="user-dropdown"
+                >
+                  {user.photoURL ? (
+                    <img
+                      src={user.photoURL}
+                      alt="Profile"
+                      className="rounded-circle me-2"
+                      style={{ width: '32px', height: '32px' }}
+                    />
+                  ) : (
+                    <i className="bi bi-person-circle me-2" style={{ fontSize: '1.5rem' }}></i>
+                  )}
+                  <span className="d-none d-md-inline">{user.displayName || 'User'}</span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Header>
+                    <small className="text-muted">{user.email}</small>
+                  </Dropdown.Header>
+                  <div className="d-flex align-items-center px-3 py-2">
+                    <i className="bi bi-translate me-2"></i>
+                    <select
+                      id="user-language-select"
+                      className="form-select form-select-sm ms-2"
+                      style={{ width: 'auto', minWidth: 90 }}
+                      value={i18n.language}
+                      onChange={e => i18n.changeLanguage(e.target.value)}
+                    >
+                      <option value="en">🇬🇧</option>
+                      <option value="pl">🇵🇱</option>
+                    </select>
+                  </div>
+                  <Dropdown.Item href="#profile">
+                    <i className="bi bi-person me-2"></i>
+                    {t('profile')}
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#settings">
+                    <i className="bi bi-gear me-2"></i>
+                    {t('settings')}
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item onClick={handleLogout} className="text-danger">
+                    <i className="bi bi-box-arrow-right me-2"></i>
+                    {t('logout', 'Sign Out')}
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+          </Nav>
+        </Container>
+      </Navbar>
       {/* Page Content */}
       <div
         className="flex-grow-1"
         style={{
           backgroundColor: '#f8f9fa',
-          marginTop: 56,
-          height: `calc(100vh - 56px)`,
           overflowY: 'auto',
           padding: '2rem'
         }}
       >
-          {children}
-        </div>
+        {children}
       </div>
+    </div>
 </div>
   );
 };

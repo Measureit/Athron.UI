@@ -6,9 +6,8 @@ import { DEMO_MODE } from './firebase/config';
 import Layout from './components/Layout';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
-import AthleteRoute from './routes/AthleteRoute';
-import GroupRoute from './routes/GroupRoute';
-import SimulationRoute from './routes/SimulationRoute';
+import BlogRoute from './routes/BlogRoute';
+import SimulatorRoute from './routes/SimulatorRoute';
 import Analytics from './components/Analytics';
 import Settings from './components/Settings';
 import { Spinner, Container, Alert } from 'react-bootstrap';
@@ -48,18 +47,11 @@ const AppContent: React.FC = () => {
 
     return (
         <>
-            {DEMO_MODE && (
-                <Alert variant="warning" className="mb-0 text-center border-0 rounded-0" style={{ fontSize: '0.85rem' }}>
-                    <i className="bi bi-exclamation-triangle me-2"></i>
-                    <strong>Demo Mode</strong> - See FIREBASE_SETUP.md to configure real authentication
-                </Alert>
-            )}
             <Layout>
                 <Switch>
                     <Route exact path="/" component={Dashboard} />
-                    <Route path="/athlete" component={AthleteRoute} />
-                    <Route path="/group" component={GroupRoute} />
-                    <Route path="/simulation" component={SimulationRoute} />
+                    <Route path="/blog" component={BlogRoute} />
+                    <Route path="/simulator" component={SimulatorRoute} />
                     <Route path="/analytics" component={Analytics} />
                     <Route path="/settings" component={Settings} />
                 </Switch>
