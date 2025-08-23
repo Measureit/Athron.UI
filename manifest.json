@@ -1,6 +1,6 @@
 {
   "short_name": "Athron",
-  "name": "Athron App",
+  "name": "Athron Training App",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,7 +20,7 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#0d6efd",
+  "theme_color": "#1976d2",
   "background_color": "#ffffff",
   "orientation": "portrait-primary",
   "categories": ["sports", "fitness", "productivity"],
