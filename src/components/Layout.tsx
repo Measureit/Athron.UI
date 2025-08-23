@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, Button, Dropdown } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -12,7 +12,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(window.innerWidth < 768);
   const location = useLocation();
   const { i18n } = useTranslation();
   
@@ -21,6 +21,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { user, logout } = authHook;
 
   const toggleSidebar = () => setSidebarCollapsed(!sidebarCollapsed);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setSidebarCollapsed(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -40,6 +50,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { path: '/settings', label: t('settings'), icon: 'bi-gear' },
   ];
 
+  const sidebarWidth =  sidebarCollapsed ? 52 : 280;
+
   return (
   <div className="d-flex">
       {/* Sidebar */}
@@ -48,10 +60,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           sidebarCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded'
         }`}
         style={{
-          width: sidebarCollapsed ? '80px' : '280px',
+          width: sidebarWidth,
           minHeight: '100vh',
           transition: 'width 0.3s ease',
-          position: 'relative'
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: 1020
         }}
       >
         {/* Sidebar Header */}
@@ -126,10 +141,23 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
       </div>
 
-      {/* Main Content Area */}
-      <div className="flex-grow-1 d-flex flex-column">
-        {/* Top Navigation Bar */}
-        <Navbar bg="primary" variant="dark" className="shadow-sm">
+
+    {/* Main Content Area */}
+    <div style={{ marginLeft: sidebarWidth, minHeight: '100vh' }}>
+      {/* Top Navigation Bar */}
+      <Navbar
+        bg="primary"
+        variant="dark"
+        className="shadow-sm"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: sidebarWidth,
+          right: 0,
+          zIndex: 1030,
+          height: 56
+        }}
+      >
           <Container fluid>
             <Navbar.Brand className="fw-bold">
               <i className="bi bi-activity me-2"></i>
@@ -194,8 +222,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </Nav>
           </Container>
         </Navbar>
-        {/* Page Content */}
-        <div className="flex-grow-1 p-4" style={{ backgroundColor: '#f8f9fa' }}>
+      {/* Page Content */}
+      <div
+        className="flex-grow-1"
+        style={{
+          backgroundColor: '#f8f9fa',
+          marginTop: 56,
+          height: `calc(100vh - 56px)`,
+          overflowY: 'auto',
+          padding: '2rem'
+        }}
+      >
           {children}
         </div>
       </div>

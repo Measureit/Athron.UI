@@ -1,3 +1,6 @@
+// Register service worker for PWA support
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+serviceWorkerRegistration.register();
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
