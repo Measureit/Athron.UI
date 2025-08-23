@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
-interface PathSimulationProps {
+interface SimulatorProps {
     data: Array<{ x: number; y: number }>;
 }
 
-const PathSimulation: React.FC<PathSimulationProps> = ({ data }) => {
+const Simulator: React.FC<SimulatorProps> = ({ data }) => {
     const svgRef = useRef<SVGSVGElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
@@ -291,4 +291,4 @@ const PathSimulation: React.FC<PathSimulationProps> = ({ data }) => {
     );
 };
 
-export default PathSimulation;
+export default Simulator;
