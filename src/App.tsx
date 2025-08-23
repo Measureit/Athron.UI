@@ -52,6 +52,7 @@ const AppContent: React.FC = () => {
                     <Route exact path="/" component={Dashboard} />
                     <Route path="/blog" component={BlogRoute} />
                     <Route path="/simulator" component={SimulatorRoute} />
+                    <Route path="/builder" component={require('./routes/BuilderRoute').default} />
                     <Route path="/analytics" component={Analytics} />
                     <Route path="/settings" component={Settings} />
                 </Switch>

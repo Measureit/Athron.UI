@@ -47,6 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { path: '/', label: t('dashboard'), icon: 'bi-house-door' },
     { path: '/blog', label: t('blog'), icon: 'bi-journal-text' },
     { path: '/simulator', label: t('simulator'), icon: 'bi-cpu' },
+    { path: '/builder', label: t('builder'), icon: 'bi-diagram-3' },
     { path: '/analytics', label: t('analytics'), icon: 'bi-bar-chart' },
     { path: '/settings', label: t('settings'), icon: 'bi-gear' },
   ];
@@ -227,7 +228,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         style={{
           backgroundColor: '#f8f9fa',
           overflowY: 'auto',
-          padding: '2rem'
+          padding: '2rem',
+          paddingTop: 56,
         }}
       >
         {children}

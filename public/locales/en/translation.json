@@ -10,5 +10,6 @@
   "settings": "Settings",
   "language": "Language",
   "profile": "Profile",
-  "logout": "Logout"
+  "logout": "Logout",
+  "builder": "Builder"
 }
