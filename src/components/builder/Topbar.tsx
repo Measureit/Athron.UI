@@ -1,12 +1,16 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 type ToolbarItem = {
-  type: 'player' | 'ball' | 'goal' | 'cone' | 'whistle' | 'arrow';
+  type: 'player' | 'ball' | 'goal' | 'cone' | 'whistle' | 'arrow' | 'pitch';
   label: string;
   icon: React.ReactNode;
   color: string;
   border?: string;
 };
+
+
 
 const TOOLBAR_ITEMS: ToolbarItem[] = [
   {
@@ -30,12 +34,13 @@ const TOOLBAR_ITEMS: ToolbarItem[] = [
   },
   {
     type: 'cone',
-    label: 'Pachołek',
-    icon: <span style={{fontWeight:'bold'}}>▲</span>,
-    color: '#ff9800',
+    label: 'Stożek',
+    icon: <svg width="16" height="16" viewBox="0 0 16 16" style={{ display: 'block' }}><polygon points="8,2 14,14 2,14" fill="#ff9800" stroke="#d2691e" strokeWidth="1" /></svg>,
+    color: 'transparent',
   },
 ];
 
+// Usunięto duplikat starego komponentu DraggableToolbarItem
 const DraggableToolbarItem: React.FC<{ item: ToolbarItem }> = ({ item }) => {
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.dataTransfer.setData("elementType", item.type);
@@ -45,22 +50,19 @@ const DraggableToolbarItem: React.FC<{ item: ToolbarItem }> = ({ item }) => {
       draggable
       onDragStart={handleDragStart}
       style={{
-        width: 28,
-        height: 28,
-        background: item.color,
+        width: 40,
+        height: 40,
         borderRadius: '50%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 18,
         marginRight: 8,
         cursor: 'grab',
         border: item.border,
+        background: item.color !== 'transparent' ? item.color : undefined,
         color: item.type === 'ball' ? '#333' : '#fff',
-        boxShadow: '0 2px 6px rgba(0,0,0,0.10)',
-        transition: 'transform 0.1s',
-        overflow: 'hidden',
         padding: 0,
       }}
       title={item.label}
@@ -69,29 +71,16 @@ const DraggableToolbarItem: React.FC<{ item: ToolbarItem }> = ({ item }) => {
     </div>
   );
 };
-
-const Topbar: React.FC = () => (
-  <div style={{
-    width: '100%',
-    background: 'linear-gradient(90deg, #f8f9fa 80%, #e3eafc 100%)',
-    borderBottom: '1px solid #ddd',
-    padding: '0.5rem 1rem',
-    display: 'flex',
-    gap: '2rem',
-    alignItems: 'center',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-    minHeight: 56,
-  }}>
-    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      {TOOLBAR_ITEMS.map(item => (
-        <div key={item.type} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 40 }}>
-          <DraggableToolbarItem item={item} />
-          <span style={{ fontSize: 12, color: '#555', marginTop: 2 }}>{item.label}</span>
-        </div>
-      ))}
+const Topbar: React.FC = () => {
+  return (
+    <div style={{ padding: '8px 16px', background: '#f8f9fa', borderBottom: '1px solid #ddd' }}>
+      <ButtonGroup aria-label="Toolbar">
+        {TOOLBAR_ITEMS.map(item => (
+          <DraggableToolbarItem key={item.type} item={item} />
+        ))}
+      </ButtonGroup>
     </div>
-    {/* Możesz dodać inne narzędzia, np. cofnij, powtórz, zapisz */}
-  </div>
-);
+  );
+};
 
 export default Topbar;

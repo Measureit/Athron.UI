@@ -55,6 +55,7 @@ const AppContent: React.FC = () => {
                     <Route path="/builder" component={require('./routes/BuilderRoute').default} />
                     <Route path="/analytics" component={Analytics} />
                     <Route path="/settings" component={Settings} />
+                    <Route path="/exercises" component={require('./routes/ExerciseLibraryRoute').default} />
                 </Switch>
             </Layout>
         </>
