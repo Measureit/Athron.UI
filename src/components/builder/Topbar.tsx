@@ -71,14 +71,21 @@ const DraggableToolbarItem: React.FC<{ item: ToolbarItem }> = ({ item }) => {
     </div>
   );
 };
-const Topbar: React.FC = () => {
+interface TopbarProps {
+  onSaveExercise?: () => void;
+}
+
+const Topbar: React.FC<TopbarProps> = ({ onSaveExercise }) => {
   return (
-    <div style={{ padding: '8px 16px', background: '#f8f9fa', borderBottom: '1px solid #ddd' }}>
+    <div style={{ padding: '8px 16px', background: '#f8f9fa', borderBottom: '1px solid #ddd', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <ButtonGroup aria-label="Toolbar">
         {TOOLBAR_ITEMS.map(item => (
           <DraggableToolbarItem key={item.type} item={item} />
         ))}
       </ButtonGroup>
+      <button className="btn btn-success ms-3" onClick={onSaveExercise}>
+        Zapisz ćwiczenie
+      </button>
     </div>
   );
 };

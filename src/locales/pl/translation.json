@@ -10,6 +10,22 @@
   "settings": "Ustawienia",
   "language": "Język",
   "profile": "Profil",
-  "logout": "Wyloguj się"
-  , "login_google": "Zaloguj się przez Google"
+  "logout": "Wyloguj się",
+  "login_google": "Zaloguj się przez Google",
+  "builder": "Kreator ćwiczeń",
+  "exerciseLibrary": "Ćwiczenia",
+  "skillsLibrary": "Umiejętności",
+  "attack": "Atak",
+  "defense": "Obrona",
+  "attackDescription": "Umiejętności ukierunkowane na tworzenie i wykorzystanie okazji do zdobycia gola.",
+  "defenseDescription": "Umiejętności ukierunkowane na zapobieganiu atakom przeciwnika i odzyskiwaniu piłki.",
+  "backToSkills": "Wróć do umiejętności",
+  "level": "Poziom",
+  "markAcquiredBy": "Oznacz jako opanowany przez:",
+  "noPlayersAvailable": "Brak dostępnych zawodników.",
+  "askTheGuard": "Zapytaj Strażnika",
+  "askQuestion": "Zapytaj Strażnika...",
+  "noResults": "Brak wyników.",
+  "app_name": "Athron",
+  "skillNotFound": "Umiejętność nie znaleziona"
 }

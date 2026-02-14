@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Container, Form, InputGroup, FormControl, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import SearchBar from './search/SearchBar';
 
-// Przykładowe ćwiczenia
+// Sample exercises
 const EXERCISES = [
-  { id: 1, name: 'Podania w trójkącie', description: 'Ćwiczenie na podania i ruch bez piłki.' },
-  { id: 2, name: 'Strzały na bramkę', description: 'Ćwiczenie na doskonalenie strzałów.' },
-  { id: 3, name: 'Gra 1 na 1', description: 'Ćwiczenie na drybling i obronę.' },
-  { id: 4, name: 'Pressing zespołowy', description: 'Ćwiczenie na współpracę w obronie.' },
-  { id: 5, name: 'Rozgrzewka dynamiczna', description: 'Ćwiczenie na rozgrzewkę przed treningiem.' },
+  { id: 1, name: 'Triangle Passing', description: 'Passing and movement without the ball.' },
+  { id: 2, name: 'Shots on Goal', description: 'Drill to improve shooting accuracy and power.' },
+  { id: 3, name: '1v1 Duel', description: 'Drill for dribbling and defending in one-on-one situations.' },
+  { id: 4, name: 'Team Pressing', description: 'Drill to practice team defending and pressing.' },
+  { id: 5, name: 'Dynamic Warmup', description: 'Warm-up routine before training.' },
 ];
 
 const ExerciseLibrary: React.FC = () => {
@@ -18,27 +19,27 @@ const ExerciseLibrary: React.FC = () => {
   );
 
   return (
-    <Container style={{ maxWidth: 600, marginTop: 32 }}>
-      <h2 className="mb-4">Biblioteka ćwiczeń</h2>
-      <InputGroup className="mb-3">
-        <FormControl
-          placeholder="Szukaj ćwiczenia..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-      </InputGroup>
-      <ListGroup>
+    <Container fluid className="d-flex flex-column min-vh-100 p-0" style={{ background: '#f8f9fa' }}>
+      <div className="px-4 pt-4">
+        <h2 className="mb-4">Exercise Library</h2>
+        <SearchBar value={search} onChange={setSearch} placeholder="Search exercises..." />
+      </div>
+  <Row xs={1} sm={2} md={3} className="g-4 flex-grow-1 px-4 pb-4" style={{ minHeight: 0 }}>
         {filtered.length === 0 ? (
-          <ListGroup.Item>Brak wyników.</ListGroup.Item>
+          <Col><Card className="text-center"><Card.Body>Brak wyników.</Card.Body></Card></Col>
         ) : (
           filtered.map(ex => (
-            <ListGroup.Item key={ex.id}>
-              <div style={{ fontWeight: 'bold' }}>{ex.name}</div>
-              <div style={{ fontSize: 13, color: '#555' }}>{ex.description}</div>
-            </ListGroup.Item>
+            <Col key={ex.id}>
+              <Card className="h-100 shadow-sm">
+                <Card.Body>
+                  <Card.Title>{ex.name}</Card.Title>
+                  <Card.Text style={{ fontSize: 14, color: '#555' }}>{ex.description}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
           ))
         )}
-      </ListGroup>
+      </Row>
     </Container>
   );
 };

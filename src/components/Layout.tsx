@@ -43,14 +43,24 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const { t } = useTranslation();
   // navItems must be inside the component to update on language change
-  const navItems = [
-    { path: '/', label: t('dashboard'), icon: 'bi-house-door' },
-    { path: '/blog', label: t('blog'), icon: 'bi-journal-text' },
-    { path: '/simulator', label: t('simulator'), icon: 'bi-cpu' },
-    { path: '/builder', label: t('builder'), icon: 'bi-diagram-3' },
-    { path: '/analytics', label: t('analytics'), icon: 'bi-bar-chart' },
-    { path: '/settings', label: t('settings'), icon: 'bi-gear' },
+  const userEmail = (user as any)?.email || '';
+  const isCoach = userEmail === process.env.REACT_APP_COACH_EMAIL;
+
+  const navItems: Array<{ path: string; label: string; icon: string }> = [
+    { path: '/', label: t('dashboard') || 'Dashboard', icon: 'bi-house-door' },
+    { path: '/blog', label: t('blog') || 'Blog', icon: 'bi-journal-text' },
+    { path: '/simulator', label: t('simulator') || 'Simulator', icon: 'bi-cpu' },
+    { path: '/exercise-library', label: t('exerciseLibrary') || 'Exercise Library', icon: 'bi-book' },
+    { path: '/skills-library', label: t('skillsLibrary') || 'Skills Library', icon: 'bi-bookmarks' },
   ];
+
+  if (isCoach) {
+    navItems.push(
+      { path: '/builder', label: t('builder') || 'Builder', icon: 'bi-diagram-3' },
+      { path: '/analytics', label: t('analytics') || 'Analytics', icon: 'bi-bar-chart' },
+      { path: '/settings', label: t('settings') || 'Settings', icon: 'bi-gear' }
+    );
+  }
 
   const sidebarWidth =  sidebarCollapsed ? 52 : 280;
 
@@ -199,8 +209,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       value={i18n.language}
                       onChange={e => i18n.changeLanguage(e.target.value)}
                     >
-                      <option value="en">🇬🇧</option>
                       <option value="pl">🇵🇱</option>
+                      <option value="en-US">🇬🇧</option>
                     </select>
                   </div>
                   <Dropdown.Item href="#profile">

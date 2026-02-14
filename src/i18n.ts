@@ -10,8 +10,8 @@ i18n
       en: { translation: en },
       pl: { translation: pl },
     },
-    lng: navigator.language.startsWith('pl') ? 'pl' : 'en',
-    fallbackLng: 'en',
+    lng: navigator.language.startsWith('en') ? 'en-US' : 'pl',
+    fallbackLng: 'pl',
     interpolation: { escapeValue: false },
   });
 
