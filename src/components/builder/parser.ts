@@ -15,6 +15,9 @@ export function parseTextToElements(text: string): BuilderElement[] {
     } else if (/^GOAL AT \((\d+),(\d+)\) SIZE (\d+)x(\d+)$/i.test(line)) {
       const [, x, y, w, h] = line.match(/^GOAL AT \((\d+),(\d+)\) SIZE (\d+)x(\d+)$/i)!;
       elements.push({ type: 'goal', x: Number(x), y: Number(y), width: Number(w), height: Number(h) });
+    } else if (/^CONE AT \((\d+),(\d+)\)$/i.test(line)) {
+      const [, x, y] = line.match(/^CONE AT \((\d+),(\d+)\)$/i)!;
+      elements.push({ type: 'cone', x: Number(x), y: Number(y) });
     } else if (/^PASS FROM (\d+) TO (\d+)$/i.test(line)) {
       const [, from, to] = line.match(/^PASS FROM (\d+) TO (\d+)$/i)!;
       elements.push({ type: 'pass', from: Number(from), to: Number(to) });
@@ -35,13 +38,14 @@ export function parseTextToElements(text: string): BuilderElement[] {
 export function elementsToText(elements: BuilderElement[]): string {
   return elements.map(el => {
     switch (el.type) {
-      case 'player': return `PLAYER ${el.id} AT (${el.x},${el.y})`;
-      case 'ball': return `BALL AT (${el.x},${el.y})`;
-      case 'goal': return `GOAL AT (${el.x},${el.y}) SIZE ${el.width}x${el.height}`;
-      case 'pass': return `PASS FROM ${el.from} TO ${el.to}`;
-      case 'shot': return `SHOT FROM ${el.from} TO GOAL`;
-      case 'run': return `RUN ${el.id} TO (${el.to.x},${el.to.y})`;
-      case 'dribble': return `DRIBBLE ${el.id} TO (${el.to.x},${el.to.y})`;
+  case 'player': return `PLAYER ${el.id} AT (${el.x},${el.y})`;
+  case 'ball': return `BALL AT (${el.x},${el.y})`;
+  case 'goal': return `GOAL AT (${el.x},${el.y}) SIZE ${el.width}x${el.height}`;
+  case 'cone': return `CONE AT (${el.x},${el.y})`;
+  case 'pass': return `PASS FROM ${el.from} TO ${el.to}`;
+  case 'shot': return `SHOT FROM ${el.from} TO GOAL`;
+  case 'run': return `RUN ${el.id} TO (${el.to.x},${el.to.y})`;
+  case 'dribble': return `DRIBBLE ${el.id} TO (${el.to.x},${el.to.y})`;
     }
   }).join('\n');
 }

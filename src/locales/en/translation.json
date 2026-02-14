@@ -10,6 +10,22 @@
   "settings": "Settings",
   "language": "Language",
   "profile": "Profile",
-  "logout": "Logout"
-  , "login_google": "Sign in with Google"
+  "logout": "Logout",
+  "login_google": "Sign in with Google",
+  "builder": "Exercise Builder",
+  "exerciseLibrary": "Exercises",
+  "skillsLibrary": "Skills",
+  "attack": "Attack",
+  "defense": "Defense",
+  "attackDescription": "Skills focused on creating and converting scoring opportunities.",
+  "defenseDescription": "Skills focused on preventing opponent attacks and regaining possession.",
+  "backToSkills": "Back to Skills",
+  "level": "Level",
+  "markAcquiredBy": "Mark acquired by:",
+  "noPlayersAvailable": "No players available.",
+  "askTheGuard": "Ask the Guard",
+  "askQuestion": "Ask the Guard...",
+  "noResults": "No results.",
+  "app_name": "Athron",
+  "skillNotFound": "Skill not found"
 }

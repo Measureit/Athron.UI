@@ -45,16 +45,27 @@ const AppContent: React.FC = () => {
         );
     }
 
+    const userEmail = (user as any)?.email || '';
+    const isCoach = userEmail === process.env.REACT_APP_COACH_EMAIL;
+
     return (
         <>
             <Layout>
                 <Switch>
                     <Route exact path="/" component={Dashboard} />
+                    <Route path="/skills/:id" component={require('./routes/SkillsDetailRoute').default} />
+                    <Route path="/skills-library" component={require('./routes/SkillsLibraryRoute').default} />
+                    <Route path="/exercise-library" component={require('./routes/ExerciseLibraryRoute').default} />
                     <Route path="/blog" component={BlogRoute} />
-                    <Route path="/simulator" component={SimulatorRoute} />
-                    <Route path="/builder" component={require('./routes/BuilderRoute').default} />
-                    <Route path="/analytics" component={Analytics} />
-                    <Route path="/settings" component={Settings} />
+                    {isCoach && (
+                      <>
+                      <Route path="/simulator" component={SimulatorRoute} />
+                        <Route path="/builder" component={require('./routes/BuilderRoute').default} />
+                         
+                        <Route path="/analytics" component={Analytics} />
+                        <Route path="/settings" component={Settings} />
+                      </>
+                    )}
                 </Switch>
             </Layout>
         </>
