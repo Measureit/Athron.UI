@@ -81,7 +81,7 @@ function App() {
   return (
     <AuthProvider>
       <DemoAuthProvider>
-        <Router>
+        <Router basename="/Athron.UI">
           <ScrollToTop />
           <AppContent />
         </Router>
