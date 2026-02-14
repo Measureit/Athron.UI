@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Ignore committed build outputs
+build/
+arch/build/
+static/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
