@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: `/`, // Base URL dla aplikacji - używa stałej!
+  base: `/Athron.UI/`, // Base URL dla GitHub Pages subdirectory
   plugins: [
     react()
   ],
