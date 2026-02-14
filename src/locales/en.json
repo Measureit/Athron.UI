@@ -1,0 +1,17 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "shop": "Shop",
+    "contact": "Contact",
+    "skills": "Skills"
+  },
+  "auth": {
+    "logout": "Logout",
+    "loggingOut": "Logging out...",
+    "email": "Email"
+  },
+  "layout": {
+    "loading": "Loading application..."
+  }
+}

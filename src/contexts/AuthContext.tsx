@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
+import { signInWithPopup, signOut, onAuthStateChanged, type User } from 'firebase/auth';
 import { auth, googleProvider, facebookProvider } from '../firebase/config';
 
 interface AuthContextType {
@@ -12,7 +12,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
@@ -30,6 +30,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signInWithGoogle = async () => {
     try {
+      if (!auth || !googleProvider) {
+        throw new Error('Firebase auth not initialized');
+      }
       await signInWithPopup(auth, googleProvider);
     } catch (error) {
       console.error('Error signing in with Google:', error);
@@ -39,6 +42,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signInWithFacebook = async () => {
     try {
+      if (!auth || !facebookProvider) {
+        throw new Error('Firebase auth not initialized');
+      }
       await signInWithPopup(auth, facebookProvider);
     } catch (error) {
       console.error('Error signing in with Facebook:', error);
@@ -48,6 +54,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = async () => {
     try {
+      if (!auth) {
+        throw new Error('Firebase auth not initialized');
+      }
       await signOut(auth);
     } catch (error) {
       console.error('Error signing out:', error);
@@ -56,6 +65,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);

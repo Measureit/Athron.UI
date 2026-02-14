@@ -3,44 +3,36 @@ import { Container, Card, Button, Alert, Spinner } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { useDemoAuth } from '../contexts/DemoAuthContext';
 import { DEMO_MODE } from '../firebase/config';
-import { useTranslation } from 'react-i18next';
+import PawLogo from './PawLogo';
+import { APP_CONFIG } from '../config/app.config';
 
 const Login: React.FC = () => {
-  const { t } = useTranslation();
-
-  // Use appropriate auth hook based on demo mode
   const authHook = DEMO_MODE ? useDemoAuth() : useAuth();
-  const { signInWithGoogle, signInWithFacebook } = authHook;
+  const { signInWithGoogle } = authHook;
   
-  const [loading, setLoading] = useState<'google' | 'facebook' | null>(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
 
   const handleGoogleSignIn = async () => {
     try {
       setError('');
-      setLoading('google');
+      setLoading(true);
       await signInWithGoogle();
     } catch (error: any) {
       setError('Failed to sign in with Google: ' + error.message);
     } finally {
-      setLoading(null);
-    }
-  };
-
-  const handleFacebookSignIn = async () => {
-    try {
-      setError('');
-      setLoading('facebook');
-      await signInWithFacebook();
-    } catch (error: any) {
-      setError('Failed to sign in with Facebook: ' + error.message);
-    } finally {
-      setLoading(null);
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-vh-100 d-flex align-items-center" style={{ backgroundColor: '#f8f9fa' }}>
+    <div 
+      className="min-vh-100 d-flex align-items-center justify-content-center"
+      style={{ 
+        background: 'linear-gradient(135deg, var(--primary-color) 0%, var(--light-navy) 50%, var(--secondary-color) 100%)',
+        paddingTop: '70px'
+      }}
+    >
       <Container>
         <div className="row justify-content-center">
           <div className="col-md-6 col-lg-5">
@@ -48,11 +40,20 @@ const Login: React.FC = () => {
               <Card.Body className="p-5">
                 <div className="text-center mb-4">
                   <div className="mb-3">
-                    <i className="bi bi-activity text-primary" style={{ fontSize: '3rem' }}></i>
+                    <PawLogo size={80} animated={true} />
                   </div>
-                  <h2 className="fw-bold text-dark mb-2">{t('welcome_message')}</h2>
-                  <p className="text-muted">{t('login')}</p>
+                  <h2 className="fw-bold text-dark mb-2">{APP_CONFIG.APP_NAME}</h2>
+                  <p className="text-muted">
+                    Zaloguj się, aby uzyskać dostęp do naszych treści
+                  </p>
                 </div>
+
+                {DEMO_MODE && (
+                  <Alert variant="info" className="mb-4">
+                    <i className="bi bi-info-circle me-2"></i>
+                    <strong>Demo Mode</strong> - Kliknij przycisk aby przetestować logowanie
+                  </Alert>
+                )}
 
                 {error && (
                   <Alert variant="danger" className="mb-4">
@@ -66,7 +67,7 @@ const Login: React.FC = () => {
                     variant="outline-dark"
                     size="lg"
                     onClick={handleGoogleSignIn}
-                    disabled={loading !== null}
+                    disabled={loading}
                     className="d-flex align-items-center justify-content-center py-3"
                     style={{ 
                       borderColor: '#db4437',
@@ -82,73 +83,33 @@ const Login: React.FC = () => {
                       e.currentTarget.style.color = '#db4437';
                     }}
                   >
-                    {loading === 'google' ? (
-                      <Spinner animation="border" size="sm" className="me-2" />
+                    {loading ? (
+                      <>
+                        <Spinner
+                          animation="border"
+                          size="sm"
+                          className="me-2"
+                          style={{ width: '1rem', height: '1rem' }}
+                        />
+                        Zalogowywanie...
+                      </>
                     ) : (
-                      <svg className="me-2" width="20" height="20" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                      </svg>
+                      <>
+                        <i className="bi bi-google me-2"></i>
+                        Zaloguj się z Google
+                      </>
                     )}
-                    {t('login_google')}
                   </Button>
-                  {/*
-                  <Button
-                    variant="outline-dark"
-                    size="lg"
-                    onClick={handleFacebookSignIn}
-                    disabled={loading !== null}
-                    className="d-flex align-items-center justify-content-center py-3"
-                    style={{ 
-                      borderColor: '#1877F2',
-                      color: '#1877F2',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#1877F2';
-                      e.currentTarget.style.color = 'white';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                      e.currentTarget.style.color = '#1877F2';
-                    }}
-                  >
-                    {loading === 'facebook' ? (
-                      <Spinner animation="border" size="sm" className="me-2" />
-                    ) : (
-                      <i className="bi bi-facebook me-2" style={{ fontSize: '1.2rem' }}></i>
-                    )}
-                    {t('login_facebook')}
-                  </Button>
-                  */}
                 </div>
 
-                <div className="text-center mt-4">
-                  <small className="text-muted">
-                    {t('terms_and_conditions')}
-                  </small>
+                <div className="mt-4 pt-4 border-top text-center">
+                  <p className="text-muted small">
+                    <i className="bi bi-shield-check me-1"></i>
+                    Twoje dane są bezpieczne i szyfrowane
+                  </p>
                 </div>
               </Card.Body>
             </Card>
-
-            <div className="text-center mt-4">
-              <div className="row text-muted">
-                <div className="col-4">
-                  <i className="bi bi-shield-check me-1"></i>
-                  <small>{t('secure')}</small>
-                </div>
-                <div className="col-4">
-                  <i className="bi bi-lightning me-1"></i>
-                  <small>{t('fast')}</small>
-                </div>
-                <div className="col-4">
-                  <i className="bi bi-graph-up me-1"></i>
-                  <small>{t('analytics')}</small>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </Container>

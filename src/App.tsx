@@ -1,85 +1,93 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import './App.css';
+
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { DemoAuthProvider, useDemoAuth } from './contexts/DemoAuthContext';
 import { DEMO_MODE } from './firebase/config';
-import Layout from './components/Layout';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import BlogRoute from './routes/BlogRoute';
-import SimulatorRoute from './routes/SimulatorRoute';
-import Analytics from './components/Analytics';
-import Settings from './components/Settings';
-import { Spinner, Container, Alert } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Layout from './components/Layout.tsx';
+import Login from './components/Login.tsx';
+import HomePage from './pages/HomePage.tsx';
+import BlogPage from './pages/BlogPage.tsx';
+import ShopPage from './pages/ShopPage.tsx';
+import ContactPage from './pages/ContactPage.tsx';
+import SkillsPage from './pages/SkillsPage.tsx';
+import Footer from './components/Footer.tsx';
+import ScrollToTop from './components/ScrollToTop.tsx';
+import { Container, Spinner } from 'react-bootstrap';
 
-const AppContent: React.FC = () => {
-    const authHook = DEMO_MODE ? useDemoAuth() : useAuth();
-    const { user, loading } = authHook;
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const firebaseAuth = useAuth();
+  const demoAuth = useDemoAuth();
+  const authHook = DEMO_MODE ? demoAuth : firebaseAuth;
+  const { user, loading } = authHook;
 
-    if (loading) {
-        return (
-            <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
-                <div className="text-center">
-                    <Spinner animation="border" variant="primary" style={{ width: '3rem', height: '3rem' }} />
-                    <div className="mt-3">
-                        <h5>Loading Athron App...</h5>
-                        <small className="text-muted">Please wait while we set up your session</small>
-                    </div>
-                </div>
-            </Container>
-        );
-    }
-
-    if (!user) {
-        return (
-            <>
-                {DEMO_MODE && (
-                    <Alert variant="info" className="mb-0 text-center border-0 rounded-0">
-                        <i className="bi bi-info-circle me-2"></i>
-                        <strong>Demo Mode Active</strong> - Click any login button to test the authentication flow
-                    </Alert>
-                )}
-                <Login />
-            </>
-        );
-    }
-
-    const userEmail = (user as any)?.email || '';
-    const isCoach = userEmail === process.env.REACT_APP_COACH_EMAIL;
-
+  if (loading) {
     return (
-        <>
-            <Layout>
-                <Switch>
-                    <Route exact path="/" component={Dashboard} />
-                    <Route path="/skills/:id" component={require('./routes/SkillsDetailRoute').default} />
-                    <Route path="/skills-library" component={require('./routes/SkillsLibraryRoute').default} />
-                    <Route path="/exercise-library" component={require('./routes/ExerciseLibraryRoute').default} />
-                    <Route path="/blog" component={BlogRoute} />
-                    {isCoach && (
-                      <>
-                      <Route path="/simulator" component={SimulatorRoute} />
-                        <Route path="/builder" component={require('./routes/BuilderRoute').default} />
-                         
-                        <Route path="/analytics" component={Analytics} />
-                        <Route path="/settings" component={Settings} />
-                      </>
-                    )}
-                </Switch>
-            </Layout>
-        </>
+      <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center" style={{ marginTop: '70px' }}>
+        <div className="text-center">
+          <Spinner animation="border" variant="primary" style={{ width: '3rem', height: '3rem' }} />
+        </div>
+      </Container>
     );
+  }
+
+  if (!user) {
+    return <Login />;
+  }
+
+  return children;
 };
 
-const App: React.FC = () => {
-    const AuthContextProvider = DEMO_MODE ? DemoAuthProvider : AuthProvider;
-    
+const AppContent = () => {
+  const firebaseAuth = useAuth();
+  const demoAuth = useDemoAuth();
+  const authHook = DEMO_MODE ? demoAuth : firebaseAuth;
+  const { loading } = authHook;
+
+  if (loading) {
     return (
-        <AuthContextProvider>
-            <AppContent />
-        </AuthContextProvider>
+      <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center" style={{ marginTop: '70px' }}>
+        <div className="text-center">
+          <Spinner animation="border" variant="primary" style={{ width: '3rem', height: '3rem' }} />
+        </div>
+      </Container>
     );
+  }
+
+  return (
+    <Layout>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/sklep" element={<ShopPage />} />
+        <Route path="/kontakt" element={<ContactPage />} />
+        <Route 
+          path="/umiejetnosci" 
+          element={
+            <ProtectedRoute>
+              <SkillsPage />
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
+      <Footer />
+    </Layout>
+  );
 };
+
+function App() {
+  return (
+    <AuthProvider>
+      <DemoAuthProvider>
+        <Router>
+          <ScrollToTop />
+          <AppContent />
+        </Router>
+      </DemoAuthProvider>
+    </AuthProvider>
+  );
+}
 
 export default App;
